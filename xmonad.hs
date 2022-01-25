@@ -10,6 +10,10 @@ import System.Exit
 import XMonad.Util.SpawnOnce
 import XMonad.Hooks.SetWMName
 
+-- Window Related
+import XMonad.Hooks.ManageDocks
+import XMonad.Layout.Spacing
+
 -- Fullscreen Support
 import XMonad.Hooks.EwmhDesktops
 
@@ -123,6 +127,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- See also the statusBar function from Hooks.DynamicLog.
     --
     -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
@@ -183,7 +188,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = avoidStruts (spacing 5 $ tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -248,14 +253,16 @@ myLogHook = return ()
 myStartupHook = do
 	spawnOnce "picom --no-fading-openclose"
 	spawnOnce "nitrogen --restore"
-	spawnOnce "setxkbmap se"
+	spawnOnce "polybar example"
+	spawnOnce "xrandr --output DVI-D-0 --mode 1920x1080 --refresh 144.0 --left-of DP-0 --mode 1920x1080 --refresh 144.0"
+	spawnOnce "setxkbmap se" -- wont work with nvidia drivers, use .xinitrc
 	setWMName "LG3D"
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad $ ewmhFullscreen . ewmh $  defaults
+main = xmonad $ ewmhFullscreen . ewmh $ docks defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
