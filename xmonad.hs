@@ -57,8 +57,8 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#dddddd"
-myFocusedBorderColor = "#ff0000"
+myNormalBorderColor  = "#1c5461"
+myFocusedBorderColor = "#49afcc"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -254,7 +254,7 @@ myStartupHook = do
 	spawnOnce "picom --no-fading-openclose"
 	spawnOnce "nitrogen --restore"
 	spawnOnce "polybar example"
-	spawnOnce "xrandr --output DVI-D-0 --mode 1920x1080 --refresh 144.0 --left-of DP-0 --mode 1920x1080 --refresh 144.0"
+	spawnOnce "xrandr --output DVI-D-0 --mode 1920x1080 --refresh 144.0 --left-of DP-0 --mode 1920x1080 --refresh 144.0" -- use .xinitrc
 	spawnOnce "setxkbmap se" -- wont work with nvidia drivers, use .xinitrc
 	setWMName "LG3D"
 ------------------------------------------------------------------------
